@@ -1,0 +1,86 @@
+<div class="card-community-survey" id="card-community-survey">
+    <pfng-card
+        [config]="config"
+        [headerTemplate]="headerTemplate">
+        <ng-template #headerTemplate>
+            <div class="card-heading">
+                <div class="icon-container">
+                    <span class="fa fa-check-circle fa-2x"></span>
+                </div>
+                <div class="title-text">Content Score</div>
+            </div>
+        </ng-template>
+        <div class="card-body">
+
+            <div *ngIf="loading" class="loading">
+                <div class="spinner"></div>
+            </div>
+
+            <div *ngIf="!loading">
+              <div *ngIf="displayFormat!=='collection'">
+                <app-score-bar
+                    [score]="qualityScore"
+                    [barText]="qualityBarText"
+                    text="Quality Score"
+                    [infoIcon]="{link: '/docs/contributing/content_scoring.html', text: 'Documentation'}"
+                ></app-score-bar>
+                <div class="details">
+                    Last scored {{ lastScored }}.
+                    <a
+                        [appLogEvent]='{type: "button", name: "quality_score_details"}'
+                        href=""
+                        [routerLink]=""
+                        (click)="toggleDetails('showQualityDetails')"
+                    ><span *ngIf="!showQualityDetails">Show</span><span *ngIf="showQualityDetails">Hide</span> Details</a>
+                </div>
+              </div>
+
+                <app-score-bar
+                    [score]="communityScore"
+                    [barText]="communityBarText"
+                    text="Community Score"
+                    [infoIcon]="{link: '/docs/contributing/content_scoring.html', text: 'Documentation'}"
+                ></app-score-bar>
+                <div class="details">
+                    Based on {{ numberOfSurveys }} survey<span *ngIf="numberOfSurveys !== 1">s</span>.
+                    <a
+                        [appLogEvent]='{type: "button", name: "community_score_details"}'
+                        href=""
+                        [routerLink]=""
+                        (click)="toggleDetails('showCommunityDetails')"
+                    ><span *ngIf="!showCommunityDetails">Show</span><span *ngIf="showCommunityDetails">Hide</span> Details</a>
+                </div>
+                <div class="survey" (mouseenter)="showWall(true)" (mouseleave)="showWall(false)">
+                    <div *ngIf="hideSurvey" class="survey-wall transparent"></div>
+                    <div
+                        *ngIf="hideSurvey"
+                        class="survey-wall non-transparent"
+                    >
+                        <div class="login-message">
+                            <a *ngIf="!loggedIn"
+                                [routerLink]="['/', 'login']"
+                                [queryParams]="{next: router.url}"
+                            >Please login to submit a rating.</a>
+                            <span *ngIf="loggedIn">
+                                Users are not permitted to rate their own content.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="title">Tell us about this {{displayFormat}}</div>
+
+                    <div *ngFor="let key of surveyKeys" class="input">
+                        <div class="input-title" [tooltip]="surveyConfig[key].tooltip" >{{surveyConfig[key].question}}</div>
+                        <div class="input-form">
+                            <div *ngFor="let button of surveyConfig[key].type"
+                                 (click)="submitRating(key, button.value)"
+                                 class="input-button"
+                                 [ngClass]="getButtonClass(button.value, mySurvey[key])">
+                                {{button.symbol}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </pfng-card>
+</div>

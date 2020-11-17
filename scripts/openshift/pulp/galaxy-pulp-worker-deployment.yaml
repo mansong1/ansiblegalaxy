@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: galaxy-pulp-worker
+  name: galaxy-pulp-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: galaxy-pulp-worker
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: galaxy-pulp-worker
+    spec:
+      containers:
+      - args:
+        - run
+        - pulp-worker
+        env:
+        - name: GALAXY_DB_URL
+          value: postgres://galaxy:galaxy@postgres:5432/galaxy
+        - name: GALAXY_SECRET_KEY
+          value: '31113434a24f96eacb5be664de95962e424dceb4'
+        - name: GALAXY_AWS_ACCESS_KEY_ID
+          value: ''
+        - name: GALAXY_AWS_SECRET_ACCESS_KEY
+          value: ''
+        - name: GALAXY_AWS_STORAGE_BUCKET_NAME
+          value: ''
+        - name: GALAXY_REDIS_URL
+          value: redis://redis:6379/0
+        image: mansong/galaxy:3.5.0
+        imagePullPolicy: "Always"
+        name: galaxy-pulp-worker
+        resources: {}
+      restartPolicy: Always

@@ -1,0 +1,6 @@
+api:                    /entrypoint run api
+ng:                     /entrypoint run ng
+celery-beat:            /entrypoint run celery-beat
+celery-worker:          /entrypoint run celery-worker
+pulp-resource-manager:  /entrypoint run pulp-resource-manager
+pulp-worker:            /entrypoint run pulp-worker

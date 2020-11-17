@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: galaxy-ui-conf
+data:
+    default.conf: |
+        server {
+
+            listen 5000;
+            server_name localhost;
+
+            root /opt/rh/rh-nginx112/root/usr/share/nginx/html;
+
+            location / {
+                try_files $uri /index.html;
+            }
+
+            location /admin {
+                proxy_pass http://localhost:8000/admin;
+            }
+          
+            location /api/ {
+                proxy_pass http://localhost:8000/api/;
+            }
+            
+            location /static/ {
+                alias /opt/rh/rh-nginx112/root/usr/share/nginx/html/;
+            }
+
+            location /docs/ {
+                index index.html;
+            }
+
+            location = /docs {
+                return 301 $scheme://$http_host/docs/;
+            }
+
+            location ~ ^/intro($|/) {
+                return 301 $scheme://$http_host/docs/;
+            }
+
+            error_page  500 502 503 504     /50x.html;
+            location = /50x.html {
+            }
+        }
+    nginx.conf : |
+        worker_processes    1;
+
+        error_log       /var/opt/rh/rh-nginx112/log/nginx/error.log;
+        pid             /var/opt/rh/rh-nginx112/run/nginx/nginx.pid;
+
+        events {
+            worker_connections  1024;
+        }
+
+        http {
+            include /etc/opt/rh/rh-nginx112/nginx/mime.types;
+            default_type  application/octet-stream;
+
+            log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                            '$status $body_bytes_sent "$http_referer" '
+                            '"$http_user_agent" "$http_x_forwarded_for"';
+
+            access_log  /var/opt/rh/rh-nginx112/log/nginx/access.log  main;
+
+            sendfile        on;
+            #tcp_nopush     on;
+
+            keepalive_timeout  65;
+
+            #gzip  on;
+
+            include /etc/opt/rh/rh-nginx112/nginx/conf.d/*.conf;
+        }
+    mime.types: |
+        types {
+            text/html                             html htm shtml;
+            text/css                              css;
+            text/xml                              xml rss;
+            image/gif                             gif;
+            image/jpeg                            jpeg jpg;
+            application/x-javascript              js;
+            text/plain                            txt;
+            text/x-component                      htc;
+            text/mathml                           mml;
+            image/png                             png;
+            image/x-icon                          ico;
+            image/x-jng                           jng;
+            image/vnd.wap.wbmp                    wbmp;
+            application/java-archive              jar war ear;
+            application/mac-binhex40              hqx;
+            application/pdf                       pdf;
+            application/x-cocoa                   cco;
+            application/x-java-archive-diff       jardiff;
+            application/x-java-jnlp-file          jnlp;
+            application/x-makeself                run;
+            application/x-perl                    pl pm;
+            application/x-pilot                   prc pdb;
+            application/x-rar-compressed          rar;
+            application/x-redhat-package-manager  rpm;
+            application/x-sea                     sea;
+            application/x-shockwave-flash         swf;
+            application/x-stuffit                 sit;
+            application/x-tcl                     tcl tk;
+            application/x-x509-ca-cert            der pem crt;
+            application/x-xpinstall               xpi;
+            application/zip                       zip;
+            application/octet-stream              deb;
+            application/octet-stream              bin exe dll;
+            application/octet-stream              dmg;
+            application/octet-stream              eot;
+            application/octet-stream              iso img;
+            application/octet-stream              msi msp msm;
+            audio/mpeg                            mp3;
+            audio/x-realaudio                     ra;
+            video/mpeg                            mpeg mpg;
+            video/quicktime                       mov;
+            video/x-flv                           flv;
+            video/x-msvideo                       avi;
+            video/x-ms-wmv                        wmv;
+            video/x-ms-asf                        asx asf;
+            video/x-mng                           mng;
+        }

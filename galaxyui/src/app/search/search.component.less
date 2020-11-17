@@ -1,0 +1,288 @@
+@import '../../variables';
+
+@small-laptop: 800px;
+@large-phone: 450px;
+
+#search-page {
+    margin-bottom: 150px;
+    .pagination {
+        width: 100%;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+
+        .search-field {
+            flex-grow: 2;
+            min-width: 200px;
+            max-width: 700px;
+        }
+
+        .count {
+            display: inline-block;
+        }
+
+        .filter-toggle-wrapper {
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .filter-toggle {
+            font-size: 14px;
+            width: 60px;
+        }
+
+        .filter-toggle:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+#search-list {
+    margin-top: 20px;
+    color: @black;
+
+    .type-heading {
+        background-color: #ebebeb;
+        font-size: 14px;
+        margin-bottom: -1px;
+
+        .counter {
+            background-color: #9c9c9c;
+            color: white;
+            display: inline-block;
+            text-align: center;
+            padding: 0px 5px;
+            margin: 5px;
+        }
+    }
+
+    .item-row {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        border-bottom: 1px solid #ededed;
+    }
+
+    .list-row {
+        width: 100%;
+    }
+
+    .search-list-left {
+        @media (min-width: @large-phone) {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+        }
+    }
+
+    .collection-item {
+        width: 100%;
+        @media (min-width: @large-phone) {
+            display: flex;
+        }
+    }
+
+    .collection-container {
+        width: 100%;
+    }
+
+    .collection-namespace {
+        margin-left: 20px;
+    }
+
+    .namespace-container {
+        @media (min-width: 1050px) {
+            border-right: 1px solid #ccc;
+            margin-right: 15px;
+        }
+        @media (max-width: @large-phone) {
+            width: 100%;
+        }
+
+        padding-right: 10px;
+        display: inline-block;
+
+        .avatar-wrapper {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .avatar-image {
+            display: block;
+            width: 64px;
+            @media (min-width: @large-phone) {
+                margin: auto;
+                object-fit: contain;
+            }
+        }
+        .namespace-name {
+            font-size: 12px;
+            padding-top: 10px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 15px;
+            @media (min-width: @large-phone) {
+                width: 90px;
+            }
+            @media (max-width: @large-phone) {
+                width: 100%;
+            }
+        }
+    }
+
+    .content-name {
+        .icon,
+        .name,
+        .type {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .icon {
+            text-align: center;
+            margin-right: 5px;
+            font-size: 20px;
+        }
+        .name {
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 16px;
+            margin-right: 5px;
+            color: @blue;
+        }
+        .type {
+            display: inline-block;
+            color: @white;
+            background-color: @ansible-dark-grey;
+            padding: 1px 3px;
+            border-radius: 1px;
+            border-color: @ansible-dark-grey;
+        }
+
+        .deprecated-tag {
+            display: inline-block;
+            color: @white;
+            background-color: #c00;
+            padding: 1px 3px;
+            border-radius: 1px;
+            border-color: #c00;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        .description {
+            font-weight: normal;
+        }
+    }
+
+    .cursor-pointer:hover {
+        cursor: pointer;
+    }
+
+    .content-tags {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: no-wrap;
+        align-items: flex-start;
+
+        .icon,
+        .tags {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .icon {
+            width: 32px;
+            text-align: center;
+            margin-right: 5px;
+        }
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: normal;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 1px 5px;
+            background-color: @blue;
+            color: @white;
+            border-radius: 1px;
+        }
+        .tag:hover {
+            cursor: default;
+        }
+    }
+
+    .col-reduced-margin {
+        margin-left: 10px;
+    }
+
+    .repository-details {
+        @media (min-width: @small-laptop) {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            -webkit-justify-content: flex-end;
+            -moz-justify-content: flex-end;
+            -ms-justify-content: flex-end;
+            -justify-content: flex-end;
+        }
+
+        .repo-count {
+            font-size: 14px;
+            margin-left: 10px;
+
+            .count-digits {
+                margin-left: 3px;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .extra-detail {
+        width: 100%;
+        display: block;
+
+        .relevance {
+            @media (min-width: @small-laptop) {
+                text-align: right;
+            }
+
+            .relevance-text {
+                padding-right: 10px;
+                font-weight: 600;
+            }
+        }
+
+        .import {
+            @media (min-width: @small-laptop) {
+                text-align: right;
+            }
+        }
+    }
+
+    .travis {
+        @media (min-width: @small-laptop) {
+            text-align: right;
+        }
+        margin-bottom: 10px;
+        img {
+            width: 90px;
+            height: 20px;
+        }
+    }
+}

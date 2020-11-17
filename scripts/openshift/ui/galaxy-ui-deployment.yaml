@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: galaxy-ui
+  name: galaxy-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: galaxy-ui
+  template:
+    metadata:
+      labels:
+        app: galaxy-ui
+    spec:
+      containers:
+      - image: mansong/galaxy-static:latest
+        imagePullPolicy: "Always"
+        name: galaxy-ui
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+          - mountPath: /etc/opt/rh/rh-nginx112/nginx
+            name: galaxy-ui-conf
+            readOnly: true
+      volumes:
+        - name: galaxy-ui-conf
+          configMap:
+            name: galaxy-ui-conf
+            items:
+              - key: default.conf
+                path: conf.d/default.conf
+              - key: nginx.conf
+                path: nginx.conf
+              - key: mime.types
+                path: mime.types
+      restartPolicy: Always
