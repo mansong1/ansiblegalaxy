@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dbmigrations
+spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 800
+  ttlSecondsAfterFinished: 800
+  template:
+    spec:
+      initContainers:
+        - name: makemigrations
+          image: mansong/galaxy:3.5.0
+          args:
+            - manage
+            - makemigrations
+          env:
+          - name: GALAXY_DB_URL
+            value: postgres://galaxy:galaxy@postgres:5432/galaxy
+          - name: GALAXY_AWS_ACCESS_KEY_ID
+            value: ''
+          - name: GALAXY_AWS_SECRET_ACCESS_KEY
+            value: ''
+          - name: GALAXY_AWS_STORAGE_BUCKET_NAME
+            value: ''
+          - name: GALAXY_SECRET_KEY
+            value: '31113434a24f96eacb5be664de95962e424dceb4'
+        - name: migrate
+          image: mansong/galaxy:3.5.0
+          args:
+            - manage
+            - migrate
+            - --no-input
+          env:
+          - name: GALAXY_DB_URL
+            value: postgres://galaxy:galaxy@postgres:5432/galaxy
+          - name: GALAXY_AWS_ACCESS_KEY_ID
+            value: ''
+          - name: GALAXY_AWS_SECRET_ACCESS_KEY
+            value: ''
+          - name: GALAXY_AWS_STORAGE_BUCKET_NAME
+            value: ''
+          - name: GALAXY_SECRET_KEY
+            value: '31113434a24f96eacb5be664de95962e424dceb4'
+      containers:
+        - name: checkmigrations
+          image: mansong/galaxy:3.5.0
+          args:
+            - manage
+            - makemigrations
+            - --dry-run
+            - --check
+          env:
+          - name: GALAXY_DB_URL
+            value: postgres://galaxy:galaxy@postgres:5432/galaxy
+          - name: GALAXY_AWS_ACCESS_KEY_ID
+            value: ''
+          - name: GALAXY_AWS_SECRET_ACCESS_KEY
+            value: ''
+          - name: GALAXY_AWS_STORAGE_BUCKET_NAME
+            value: ''
+          - name: GALAXY_SECRET_KEY
+            value: '31113434a24f96eacb5be664de95962e424dceb4'
+      restartPolicy: "Never"

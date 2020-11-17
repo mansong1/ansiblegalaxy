@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: galaxy-pulp-rm
+  name: galaxy-pulp-rm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: galaxy-pulp-rm
+  template:
+    metadata:
+      labels:
+        app: galaxy-pulp-rm
+    spec:
+      containers:
+      - name: galaxy-pulp-rm
+        image: mansong/galaxy:3.5.0
+        imagePullPolicy: "Always"
+        args:
+        - run
+        - pulp-resource-manager
+        env:
+        - name: GALAXY_DB_URL
+          value: postgres://galaxy:galaxy@postgres:5432/galaxy
+        - name: GALAXY_SECRET_KEY
+          value: '31113434a24f96eacb5be664de95962e424dceb4'
+        - name: GALAXY_AWS_ACCESS_KEY_ID
+          value: ''
+        - name: GALAXY_AWS_SECRET_ACCESS_KEY
+          value: ''
+        - name: GALAXY_AWS_STORAGE_BUCKET_NAME
+          value: ''
+        - name: GALAXY_REDIS_URL
+          value: redis://redis:6379/0
+      restartPolicy: Always

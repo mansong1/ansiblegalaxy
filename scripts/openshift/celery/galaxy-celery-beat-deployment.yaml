@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: galaxy-celery-beat
+  name: galaxy-celery-beat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: galaxy-celery-beat
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: galaxy-celery-beat
+    spec:
+      containers:
+      - args:
+        - run
+        - celery-beat
+        env:
+        - name: C_FORCE_ROOT
+          value: "1"
+        - name: GALAXY_DB_URL
+          value: postgres://galaxy:galaxy@postgres:5432/galaxy
+        - name: GALAXY_RABBITMQ_HOST
+          value: rabbitmq
+        - name: GALAXY_RABBITMQ_PASSWORD
+          value: galaxy
+        - name: GALAXY_SECRET_KEY
+          value: '31113434a24f96eacb5be664de95962e424dceb4'
+        - name: GALAXY_AWS_ACCESS_KEY_ID
+          value: ''
+        - name: GALAXY_AWS_SECRET_ACCESS_KEY
+          value: ''
+        - name: GALAXY_AWS_STORAGE_BUCKET_NAME
+          value: ''
+        - name: POSTGRESQL_DATABASE
+          value: galaxy
+        - name: POSTGRESQL_PASSWORD
+          value: galaxy
+        - name: POSTGRESQL_USER
+          value: galaxy
+        - name: GALAXY_REDIS_HOST
+          value: redis
+        image: mansong/galaxy:3.5.0
+        imagePullPolicy: "Always"
+        name: galaxy-celery-beat
+        resources: {}
+      restartPolicy: Always

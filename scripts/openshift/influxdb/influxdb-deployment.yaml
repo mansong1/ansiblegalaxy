@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: influxdb
+  name: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: influxdb:latest
+        imagePullPolicy: "Always"
+        env:
+        - name: INFLUXDB_UDP_ENABLED
+          value: "true"
+        - name: INFLUXDB_UDP_BIND_ADDRESS
+          value: :8087
+        - name: INFLUXDB_UDP_DATABASE
+          value: udp
+        - name: INFLUXDB_ADMIN_PASSWORD
+          value: galaxy
+        - name: INFLUXDB_ADMIN_USER
+          value: galaxy
+        - name: INFLUXDB_DB
+          value: galaxy_ui_events
+        - name: INFLUXDB_REPORTING_DISABLED
+          value: "false"
+        - name: INFLUXDB_WRITE_USER
+          value: galaxy
+        - name: INFLUXDB_WRITE_USER_PASSWORD
+          value: galaxy
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/influxdb
+          - name: config-meta
+            mountPath: /var/lib/influxdb/meta
+            subPath: meta
+          - name: config-data
+            mountPath: /var/lib/influxdb/data
+            subPath: data
+          - name: config-wal
+            mountPath: /var/lib/influxdb/wal
+            subPath: wal
+        ports:
+          - containerPort: 8086
+            protocol: TCP
+          - containerPort: 8087
+            protocol: UDP
+          - containerPort: 8083
+            protocol: TCP
+      restartPolicy: Always
+      volumes:
+        - name: config-volume
+          configMap:
+           name: influxdb-config
+        - name: config-meta
+        - name: config-data
+        - name: config-wal

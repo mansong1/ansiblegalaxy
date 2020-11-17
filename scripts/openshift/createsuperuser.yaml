@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: createsuperuser
+spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 800
+  ttlSecondsAfterFinished: 800
+  template:
+    spec:
+      containers:
+        - name: createsuperuser
+          image: mansong/galaxy:3.5.0
+          command:
+              - sh
+              - -c
+              - >-
+                echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'password')" | 
+                /usr/share/galaxy/venv/bin/python3.6 /usr/share/galaxy/venv/bin/galaxy-manage shell
+          env:
+          - name: GALAXY_DB_URL
+            value: postgres://galaxy:galaxy@postgres:5432/galaxy
+          - name: GALAXY_AWS_ACCESS_KEY_ID
+            value: ''
+          - name: GALAXY_AWS_SECRET_ACCESS_KEY
+            value: ''
+          - name: GALAXY_AWS_STORAGE_BUCKET_NAME
+            value: ''
+          - name: GALAXY_SECRET_KEY
+            value: '31113434a24f96eacb5be664de95962e424dceb4'
+      restartPolicy: "Never"

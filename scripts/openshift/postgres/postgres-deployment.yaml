@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - env:
+        - name: POSTGRESQL_DATABASE
+          value: galaxy
+        - name: POSTGRESQL_PASSWORD
+          value: galaxy
+        - name: POSTGRESQL_USER
+          value: galaxy
+        image: rhscl/postgresql-96-rhel7
+        imagePullPolicy: "Always"
+        name: postgres
+        ports:
+        - containerPort: 5432
+        resources: {}
+      restartPolicy: Always
