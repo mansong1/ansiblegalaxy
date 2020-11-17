@@ -1,0 +1,116 @@
+<div class="card-info" id="card-info">
+    <pfng-card
+        [config]="config"
+        [headerTemplate]="headerTemplate">
+        <ng-template #headerTemplate>
+            <div class="card-heading">
+                <div class="icon-container">
+                    <span class="fa fa-info-circle fa-2x"></span>
+                </div>
+                <div class="title-text">Info</div>
+            </div>
+        </ng-template>
+        <div class="card-info-body">
+            <div class="info-row" *ngIf="infoData.apb_metadata && infoData.apb_metadata['metadata']['documentationUrl']">
+                <div>
+                    <h3>References</h3>
+                    <ul>
+                        <li>
+                            <a [href]="infoData.apb_metadata['metadata']['documentationUrl']" target="_blank">{{ infoData.apb_metadata['metadata']['displayName'] }} Documentation</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/ansibleplaybookbundle/ansible-playbook-bundle"
+                               target="_blank">APB Documentation Repo</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="info-row" *ngIf="infoData.min_ansible_version">
+                <div class="info-title">
+                    Minimum Ansible Version
+                </div>
+                <div class="info-data">
+                    <span class="min-version">{{infoData.min_ansible_version}}</span>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-title">
+                    Installation
+                </div>
+                <div class="info-data">
+                    <copy-to-clipboard [copyText]="infoData.install_cmd"></copy-to-clipboard>
+                </div>
+            </div>
+
+            <div class="info-row" *ngIf="infoData.install_warn">
+                <div class="info-title"></div>
+                <div class="info-data">
+                    <div><b>NOTE:</b> {{infoData.install_warn}}</div>
+                </div>
+            </div>
+
+            <div class="info-row" *ngIf="infoData.download_url">
+                <div class="info-title"></div>
+                <div class="info-data">
+                    <div><a [href]="infoData.download_url"><i class="fa fa-download"></i> Download tarball</a></div>
+                </div>
+            </div>
+
+            <div class="info-row" *ngIf="infoData.latest_version">
+                <div class="info-title">
+                    Install Version
+                </div>
+                <div class="info-data" >
+                    <select (change)="updateVersion($event)">
+                        <option value="" selected>
+                            {{infoData.latest_version.version}} released {{infoData.latest_version.created}} (latest)
+                        </option>
+                        <option *ngFor="let item of infoData.versions" [value]="item.version">
+                            {{item.version}}
+                            released {{item.created}}
+                        <option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="info-row" *ngIf="infoData.last_commit">
+                <div class="info-title">
+                    Last Commit
+                </div>
+                <div class="info-data" >
+                    {{ infoData.last_commit }}
+                </div>
+            </div>
+
+            <div class="info-row" *ngIf="infoData.last_import">
+                <div class="info-title">
+                    Last Import
+                </div>
+                <div class="info-data">
+                    {{ infoData.last_import }}
+                </div>
+            </div>
+
+            <div class="info-row" *ngIf="infoData.tags && infoData.tags.length > 0">
+                <div class="info-title">
+                    <i class="fa fa-tags"></i> Tags
+                </div>
+                <div class="info-data">
+                    <div class="tag" *ngFor="let tag of infoData.tags">
+                        {{ tag }}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="infoData.readme" class="readme">
+                <div class="readme-container">
+                    <div [innerHTML]="infoData.readme"></div>
+                    <div class="fade-out"></div>
+                </div>
+                <a (click)="switchToReadme()">Load full Read Me</a>
+            </div>
+        </div>
+    </pfng-card>
+</div>

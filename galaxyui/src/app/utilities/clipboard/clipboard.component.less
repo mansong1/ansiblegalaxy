@@ -1,0 +1,28 @@
+/* clipboard.component.less */
+
+@import '../../../variables';
+
+.copy-to-clipboard {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .code {
+        vertical-align: middle;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        display: inline-block;
+        background-color: #f9f2f4;
+        color: #c20f45;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .btn {
+        display: inline-block;
+        height: 23.3px;
+        box-shadow: none;
+        text-shadow: none;
+        font-weight: bold;
+    }
+}

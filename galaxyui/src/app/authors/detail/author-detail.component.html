@@ -1,0 +1,176 @@
+<app-page-header [headerTitle]="pageTitle" [headerIcon]="pageIcon"></app-page-header>
+
+<div id="author-detail" class="container-fluid">
+
+    <div class="row" *ngIf="!authorNotFound">
+        <div class="col-sm-9">
+            <div class="namespace namespace-header-left">
+                <div class="namespace-details">
+                    <div class="namespace-img">
+                        <table class="img-wrapper">
+                            <tr>
+                                <td><img [src]="namespace.avatar_url"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="namespace-bio">
+                        <p class="name">{{ namespace.name }}</p>
+                        <div class="description">
+                            {{
+                                namespace.description.length > maxDescriptionLength ? (namespace.description | slice:0:maxDescriptionLength) + '...' : namespace.description}}
+                            <div class="fade-out"></div>
+                        </div>
+                        <p *ngIf="namespace.company"><i class="fa fa-building"></i> {{ namespace.company }}</p>
+                        <p *ngIf="namespace.location"><i class="fa fa-map-marker"></i> {{ namespace.location }}</p>
+                        <p *ngIf="namespace.email">
+                            <a [appLogEvent]='namespace.email' [href]="'mailto:'+ namespace.email" tooltip="Send an email">
+                                <i class="fa fa-envelope"></i> {{ namespace.email }}
+                            </a>
+                        </p>
+                        <p *ngIf="namespace.html_url">
+                            <a [appLogEvent]='namespace.html_url' [href]="namespace.html_url"
+                                target="_blank"
+                                tooltip="View site in new browser window or tab">
+                                <i class="fa fa-link"></i> {{ namespace.html_url }}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+
+            <div class="namespace namespace-header-right">
+                <div class="control-buttons">
+                    <div class="header-button">
+                        <div
+                            *ngIf="preferences"
+                            tooltip="Get notified when this author posts new content."
+                            class="btn btn-default"
+                            (click)="followUser()"
+                        >
+                            <span class="{{followerClass}}"></span> {{ isFollower ? 'Unfollow Author':'Follow Author'}}
+                        </div>
+                        <a
+                            *ngIf="!preferences"
+                            tooltip="Get notified when this author posts new content."
+                            class="btn btn-default"
+                            [routerLink]='["/", "login"]'
+                            [queryParams]='{next: router.url}'
+                        >
+                            <span class="fa fa-user-plus"></span> Login to Follow
+                        </a>
+                    </div>
+
+                    <div class="header-button" *ngIf="namespace.html_url">
+                        <a
+                            appLogEvent='github'
+                            target="_blank"
+                            href="{{ namespace.html_url }}"
+                            class="btn btn-default primary-action"
+                        >
+                            <span class="fa fa-github"></span> View on GitHub
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row detail-search-toolbar" *ngIf="!authorNotFound">
+        <div class="col-sm-12">
+            <pfng-toolbar
+                [config]="toolbarConfig"
+                (onFilterChange)="filterChanged($event)"
+                (onSortChange)="sortChanged($event)">
+            </pfng-toolbar>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!authorNotFound && collections.length > 0">
+        <div class="col-sm-12 type-heading">Collections <div class="counter">{{ collectionCount }}</div></div>
+    </div>
+
+    <div class="row item-row" *ngFor="let item of collections">
+        <app-collection-list-item
+            [collection]='item'
+            [expandContent]='false'
+        ></app-collection-list-item>
+    </div>
+
+    <div class="row repository-list" *ngIf="!authorNotFound && repositories.length > 0">
+        <div class="col-sm-12 type-heading">Roles <div class="counter">{{ repoCount }}</div></div>
+        <div class="col-sm-12">
+            <pfng-list
+                [config]="listConfig"
+                [items]="repositories"
+                [itemTemplate]="itemTemplate"
+                [actionTemplate]="actionTemplate"
+                (onClick)="handleListClick($event)">
+                <ng-template #itemTemplate let-item="item">
+                    <div class="list-pf-left">
+                        <span class="{{ item.iconClass }} list-pf-icon list-pf-icon-small"
+                            tooltip="{{ item.tooltip }}"
+                            container="body"></span>
+                    </div>
+                    <div class="list-pf-content-wrapper">
+                        <div class="list-pf-main-content">
+                            <div class="list-pf-title">
+                                <a [routerLink]="['/', item.summary_fields['namespace']['name'], item.name]"
+                                   class="repo-name" tooltip="View content details">{{ item.name }}</a>
+
+                                <span *ngIf="item.deprecated" class="label label-danger deprecation-notice" tooltip="This item has been deprecated. Use at your own risk.">Deprecated</span>
+
+                            </div>
+                            <div class="list-pf-description">
+                                {{ item.description }}
+                            </div>
+                        </div>
+                        <div class="list-pf-additional-content">
+                            <div class="content-count">
+                                <app-score [repo]="item"></app-score>
+                            </div>
+
+                            <div class="content-count">
+                                <i class="fa fa-download"></i>
+                                <span class="count">{{ item.download_count }}</span>
+                                <span class="count-label">Downloads</span>
+                            </div>
+
+                            <div *ngIf="item.travis_build_url">
+                                <div class="travis">
+                                    <a [appLogEvent]='"travis: " + item.name' href="{{ item.travis_build_url }}" target="_blank" tooltip="View Travis build output. Opens in new tab or window.">
+                                        &nbsp; <img src="{{ item.travis_status_url }}"
+                                            class="travis-status-img" title="Travis Build Status" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #actionTemplate let-item="item" let-index="index">
+                    <author-detail-actions
+                        [repository]="item"
+                    ></author-detail-actions>
+                </ng-template>
+            </pfng-list>
+        </div>
+    </div>
+
+    <div class="row repository-pagination" *ngIf="!authorNotFound">
+        <div class="col-sm-12">
+            <div class="pagination"
+                *ngIf="paginationConfig.totalItems > paginationConfig.pageSize">
+                <pfng-pagination
+                    [config]='paginationConfig'
+                    (onPageSizeChange)="handlePageSizeChange($event)"
+                    (onPageNumberChange)="handlePageNumberChange($event)">
+                   </pfng-pagination>
+               </div>
+        </div>
+    </div>
+
+</div>
+
+<app-page-loading [loading]="pageLoading"></app-page-loading>

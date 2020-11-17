@@ -1,0 +1,16 @@
+# Include base requirements
+-r requirements.in
+
+# Django
+# TODO(cutwater): Review usage of this package
+django-debug-toolbar
+
+# Testing
+mock
+pytest==5.4.1
+pytest-django==3.8.0
+pytest-cov==2.8.1
+pytest-env
+
+# Utils
+honcho

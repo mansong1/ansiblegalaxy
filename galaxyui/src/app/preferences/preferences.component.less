@@ -1,0 +1,93 @@
+@import '../../variables';
+
+#emailCard {
+    font-size: 14px;
+    .verified {
+        color: @green;
+    }
+
+    .unverified {
+        color: @red;
+    }
+
+    .no-bold {
+        font-weight: normal;
+    }
+
+    .action {
+        width: 200px;
+        display: flex;
+        justify-content: flex-end;
+
+        .action-button {
+            margin-left: 10px;
+        }
+    }
+
+    .email-options {
+        display: flex;
+        margin-top: 10px;
+        justify-content: flex-end;
+    }
+}
+
+#notificationCard {
+    font-size: 14px;
+    .notification-settings {
+        margin-left: 20px;
+    }
+
+    .notification-row {
+        display: flex;
+        margin-top: 5px;
+
+        .description {
+            width: 350px;
+        }
+
+        .check {
+            text-align: center;
+            align-items: center;
+            align-content: center;
+            min-width: 60px;
+        }
+
+        .notification-col {
+            display: inline-block;
+        }
+    }
+}
+
+#apiTokenCard {
+    font-size: 14px;
+    .middle-align {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.followers-cards {
+    .avatar-container {
+        height: 50px;
+        width: 50px;
+        object-fit: contain;
+        display: inline-block;
+
+        .avatar {
+            height: 50px;
+        }
+    }
+
+    .name {
+        display: inline-block;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: 10px;
+    }
+
+    .unfollowed {
+        opacity: 0.5;
+    }
+}

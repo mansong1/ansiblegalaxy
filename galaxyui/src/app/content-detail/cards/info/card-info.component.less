@@ -1,0 +1,109 @@
+/* card-info.component.less */
+
+@import '../../../../variables';
+
+.card-info {
+    color: @black;
+    height: 100%;
+
+    .card-heading {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        .icon-container,
+        .title-text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .icon-container {
+            margin-right: 6px;
+        }
+        .title-text {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .title-text {
+            font-size: 16px;
+            font-weight: 700;
+        }
+    }
+    .card-info-body {
+        font-size: 14px;
+
+        .readme {
+            a {
+                cursor: pointer;
+            }
+
+            .readme-container {
+                position: relative;
+                max-height: 300px;
+                min-height: 50px;
+                overflow: hidden;
+            }
+
+            .fade-out {
+                position: absolute;
+                z-index: 1;
+                bottom: 0;
+                left: 0;
+                pointer-events: none;
+                background-image: linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0),
+                    rgba(255, 255, 255, 1) 90%
+                );
+                width: 100%;
+                height: 50px;
+            }
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 5px;
+            align-items: center;
+
+            .info-title {
+                width: 200px;
+                font-weight: bold;
+                margin-right: 5px;
+            }
+
+            .min-version {
+                background-color: @grey;
+                color: white;
+                padding: 3px;
+            }
+        }
+
+        .tag {
+            display: inline-block;
+            font-weight: normal;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 1px 5px;
+            background-color: @blue;
+            color: @white;
+            border-radius: 1px;
+        }
+    }
+
+    .apb {
+        .title {
+            font-size: 16px;
+            font-weight: 700;
+            img {
+                width: 48px;
+                height: 48px;
+            }
+        }
+        table {
+            margin-top: 20px;
+        }
+        a,
+        a:visited,
+        a:active,
+        a:hover {
+            text-decoration: none;
+        }
+    }
+}

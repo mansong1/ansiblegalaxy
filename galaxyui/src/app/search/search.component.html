@@ -1,0 +1,179 @@
+<app-page-header [headerTitle]="pageTitle" [headerIcon]="pageIcon"></app-page-header>
+
+<div id="search-page" class="container-fluid">
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="search-bar">
+                <div class="search-field">
+                    <div class="input-group">
+                        <input type="text" [(ngModel)]="queryParams.keywords" (keyup.enter)="searchEntered()" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" (click)="searchEntered()"><span class="fa fa-search"></span></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="filter-toggle-wrapper">
+                    <div [appLogEvent]='{type: "button", name: "Filter"}' (click)="toggleFilter()" class="filter-toggle">
+                        <span class="fa fa-angle-{{showFilter ? 'up':'down'}}"></span>
+                        Filters
+                    </div>
+                </div>
+                <div class="count">
+                    ({{ contentCount + collectionCount }} results)
+                </div>
+            </div>
+            <div *ngIf="showFilter" class="filter">
+                <pfng-toolbar
+                    [config]="getToolbarConfig()"
+                    (onFilterChange)="filterChanged($event)"
+                    (onSortChange)="sortChanged($event)">
+                </pfng-toolbar>
+            </div>
+            <div id="search-list">
+                <pfng-empty-state
+                    *ngIf="contentCount + collectionCount === 0"
+                    [config]="emptyStateConfig"
+                >
+                </pfng-empty-state>
+
+                <div class="row" *ngIf="collectionItems && collectionItems.length > 0">
+                    <div class="col-sm-12 type-heading">Collections <div class="counter">{{ collectionCount }}</div></div>
+                </div>
+
+                <div class="row item-row" *ngFor="let item of collectionItems">
+                    <div class="collection-item">
+                        <div class="namespace-container collection-namespace">
+                            <a [routerLink]="['/', item.namespace.name]"
+                               [tooltip]="'View more content from ' + item.namespace.name"
+                               container="body">
+                               <div class="avatar-wrapper">
+                                   <img [src]="item.namespace.avatar_url || '/assets/avatar.png'" class="avatar-image" >
+                               </div>
+                               <div class="namespace-name">{{ item.namespace.name }}</div>
+                            </a>
+                        </div>
+                        <div class="collection-container">
+                            <app-collection-list-item
+                                [collection]='item'
+                                [expandContent]='true'
+                                [matchList]='item.content_match'
+                            ></app-collection-list-item>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row" *ngIf="contentItems && contentItems.length > 0">
+                    <div class="col-sm-12 type-heading">Roles <div class="counter">{{ contentCount }}</div></div>
+                </div>
+                <pfng-list
+                    *ngIf="contentItems && contentItems.length > 0"
+                    [config]="listConfig"
+                    [items]="contentItems"
+                    [itemTemplate]="itemTemplate">
+                    <ng-template #itemTemplate let-item="item" let-index="index">
+
+                        <div class="list-pf-content-wrapper row list-row">
+                            <div class="col-sm-7 search-list-left">
+                                <div class="namespace-container">
+                                    <a [routerLink]="['/', item.summary_fields.namespace.name]"
+                                       [tooltip]="'View more content from ' + item['displayNamespace']"
+                                       container="body">
+                                       <div class="avatar-wrapper">
+                                           <img [src]="item.avatar_url" class="avatar-image" >
+                                       </div>
+                                        <div class="namespace-name">{{ item['namespace_name'] }}</div>
+                                    </a>
+                                </div>
+                                <div class="list-pf-title">
+                                    <div class="content-name">
+                                        <div class="name cursor-pointer">
+                                            <a
+                                                [routerLink]="[item['contentLink']]"
+                                                (contextmenu)="contentClick(item, index)"
+                                                (click)="contentClick(item, index)"
+                                                (appMiddleclick)="contentClick(item, index)"
+                                                tooltip="View content details"
+                                            >{{ item.name }}</a>
+                                        </div>
+                                        <div class="deprecated-tag" *ngIf="item.summary_fields.repository.deprecated"  tooltip="This item has been deprecated. Use at your own risk.">
+                                            Deprecated
+                                        </div>
+                                        <div class="description">
+                                            {{item.description}}
+                                        </div>
+
+                                    </div>
+                                    <div class="content-tags">
+                                        <div class="icon"><i class="fa fa-tag fa-2x"></i></div>
+                                        <div class="tags">
+                                            <div class="tag" *ngFor="let tag of item.summary_fields.tags">
+                                                {{ tag }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-reduced-margin">
+                                <div class="list-pf-description">
+                                    <div class="travis" *ngIf="item.summary_fields.repository.travis_build_url">
+                                        <a href="{{ item.summary_fields.repository.travis_build_url }}" container="body" target="_blank" tooltip="View Travis build output. Opens in new tab or window.">
+                                            <img src="{{ item.summary_fields.repository.travis_status_url }}"
+                                                class="travis-status-img" title="Travis Build Status" />
+                                        </a>
+                                    </div>
+                                    <div class="repository-details">
+
+                                        <app-score
+                                            class="repo-count"
+                                            [repo]="item.summary_fields.repository"
+                                        ></app-score>
+
+                                        <div class="repo-count">
+                                            <i class="fa fa-download"></i>
+                                            <span class="count-digits">{{ item.download_count }}</span>
+                                            <span>Downloads</span>
+                                        </div>
+                                    </div>
+                                    <div class="extra-detail">
+                                        <div class="import">
+                                            <b>Last Imported: </b>
+                                            {{ item.imported }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ng-template>
+                </pfng-list>
+            </div>
+            <div class="pagination" *ngIf="contentCount + collectionCount > 0">
+                <pfng-pagination
+                    [config]='paginationConfig'
+                    (onPageSizeChange)="handlePageChange($event)"
+                    (onPageNumberChange)="handlePageChange($event)">
+                   </pfng-pagination>
+               </div>
+        </div>
+        <div class="col-lg-3">
+            <popular-widget
+                [popularTitle]="'Popular Tags'"
+                [popularType]="'tags'"
+                (emitItem)="handleWidgetClick($event)">
+            </popular-widget>
+            <popular-widget
+                [popularTitle]="'Popular Platforms'"
+                [popularType]="'platforms'"
+                (emitItem)="handleWidgetClick($event)">
+            </popular-widget>
+            <popular-widget
+                [popularTitle]="'Popular Clouds'"
+                [popularType]="'cloud_platforms'"
+                (emitItem)="handleWidgetClick($event)">
+            </popular-widget>
+        </div>
+    </div>
+</div>
+<app-page-loading [loading]="pageLoading"></app-page-loading>

@@ -1,0 +1,139 @@
+/* repository.component.less */
+
+@import '../../../variables';
+
+@box-height: 100px;
+@image-height: 80px;
+
+.row.repository-container {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.repository-container {
+    color: @black;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+
+    .repository-details {
+        height: @box-height;
+        min-width: 270px;
+
+        .sccores .control-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .scores {
+            .repo-count {
+                display: inline-block;
+                margin-left: 10px;
+                font-size: 14px;
+            }
+        }
+
+        .control-buttons {
+            .header-button {
+                display: inline-block;
+                margin-left: 10px;
+                margin-bottom: 5px;
+            }
+        }
+
+        .columns {
+            display: inline-block;
+            vertical-align: top;
+        }
+    }
+
+    .description-box {
+        min-width: 200px;
+        .repo-description {
+            position: relative;
+            overflow: hidden;
+            max-height: 85px;
+            max-width: 400px;
+        }
+
+        .fade-out {
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 1) 90%
+            );
+            width: 100%;
+            height: 20px;
+        }
+    }
+
+    .header-left {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .namespace-img {
+        width: @box-height;
+        cursor: pointer;
+        margin-right: 20px;
+        padding-right: 20px;
+        text-align: center;
+
+        @media (min-width: 1000px) {
+            border-right: 1px solid #ccc;
+        }
+
+        .img-wrapper {
+            height: @image-height;
+            object-fit: contain;
+        }
+
+        .namespace-avatar {
+            width: @image-height;
+            padding: 0;
+            border: 0;
+            display: block;
+            object-fit: contain;
+        }
+
+        .namespace-name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: @image-height;
+            margin-top: 5px;
+            object-fit: contain;
+        }
+    }
+
+    .valign-center-box {
+        display: flex;
+        align-items: center;
+        @media (min-width: 1200px) {
+            height: @box-height;
+        }
+    }
+
+    .repo-name {
+        color: @black;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .count {
+        font-weight: 600;
+        margin-left: 1px;
+        margin-right: 3px;
+    }
+
+    .deprecation-notice {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 5px;
+        font-size: 12px;
+    }
+}
