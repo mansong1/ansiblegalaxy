@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/requirements.txt requirements/requirements.in
 #
-aiohttp==3.5.4            # via -r requirements/requirements.in
+aiohttp==3.8.0            # via -r requirements/requirements.in
 alabaster==0.7.12         # via sphinx
 amqp==1.4.9               # via kombu
 ansible-lint==4.2.0       # via -r requirements/requirements.in, galaxy-importer
@@ -39,7 +39,7 @@ django-prometheus==1.0.15  # via -r requirements/requirements.in
 django-storages[boto3]==1.7.1  # via -r requirements/requirements.in
 django==2.2.11            # via -r requirements/requirements.in, django-allauth, django-bootstrap-form, django-celery, django-filter, django-log-request-id, django-storages, drf-nested-routers, drf-yasg, pulpcore
 djangorestframework-queryfields==1.0.0  # via pulpcore
-djangorestframework==3.7.7  # via -r requirements/requirements.in, drf-nested-routers, drf-yasg, pulpcore
+djangorestframework==3.11.2  # via -r requirements/requirements.in, drf-nested-routers, drf-yasg, pulpcore
 docutils==0.14            # via botocore, rst2html5-tools, sphinx
 drf-nested-routers==0.91  # via pulpcore
 drf-yasg==1.12.1          # via pulpcore
