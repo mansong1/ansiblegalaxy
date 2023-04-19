@@ -95,7 +95,7 @@ six==1.12.0               # via ansible-lint, bleach, cryptography, drf-yasg, dy
 snowballstemmer==1.2.1    # via sphinx
 sphinx==1.7.9             # via -r requirements/requirements.in
 sphinxcontrib-websupport==1.1.0  # via sphinx
-sqlparse==0.3.1           # via django
+sqlparse==0.4.4           # via django
 toml==0.10.0              # via dynaconf
 typing-extensions==3.7.4.2  # via aiohttp
 uritemplate==3.0.0        # via coreapi, drf-yasg
