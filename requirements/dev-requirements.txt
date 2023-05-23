@@ -98,7 +98,7 @@ pytz==2018.7              # via -r requirements/requirements.in, babel, celery, 
 pyyaml==5.3.1             # via -r requirements/requirements.in, ansible, ansible-lint, galaxy-importer, pulpcore, yamllint
 redis==3.0.1              # via rq
 requests-oauthlib==1.0.0  # via -r requirements/requirements.in, django-allauth
-requests==2.23.0          # via -r requirements/requirements.in, coreapi, django-allauth, galaxy-importer, influxdb, pygithub, requests-oauthlib, sphinx
+requests==2.31.0          # via -r requirements/requirements.in, coreapi, django-allauth, galaxy-importer, influxdb, pygithub, requests-oauthlib, sphinx
 rq==0.13.0                # via pulpcore
 rst2html5-tools==0.5.3    # via -r requirements/requirements.in
 ruamel.yaml==0.15.85      # via ansible-lint, drf-yasg
