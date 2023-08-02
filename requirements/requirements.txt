@@ -93,7 +93,7 @@ s3transfer==0.2.0         # via boto3
 semantic-version==2.8.4   # via -r requirements/requirements.in, galaxy-importer
 six==1.12.0               # via ansible-lint, bleach, cryptography, drf-yasg, dynaconf, influxdb, packaging, pyopenssl, python-dateutil, sphinx
 snowballstemmer==1.2.1    # via sphinx
-sphinx==1.7.9             # via -r requirements/requirements.in
+sphinx==3.3.0             # via -r requirements/requirements.in
 sphinxcontrib-websupport==1.1.0  # via sphinx
 sqlparse==0.3.1           # via django
 toml==0.10.0              # via dynaconf
