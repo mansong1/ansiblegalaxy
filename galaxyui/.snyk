@@ -1,0 +1,72 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - patternfly-react > react-ellipsis-with-tooltip > semantic-release > @semantic-release/github > https-proxy-agent:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-HTTPSPROXYAGENT-469131
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip > semantic-release >
+          @semantic-release/github > https-proxy-agent
+    - patternfly-react > react-ellipsis-with-tooltip > semantic-release > @semantic-release/npm > npm > libcipm > pacote > make-fetch-happen > https-proxy-agent:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-HTTPSPROXYAGENT-469131
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip > semantic-release >
+          @semantic-release/npm > npm > libcipm > pacote > make-fetch-happen >
+          https-proxy-agent
+  SNYK-JS-LODASH-567746:
+    - patternfly-react > react-ellipsis-with-tooltip > semantic-release > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip > semantic-release >
+          lodash
+    - patternfly-react > react-ellipsis-with-tooltip > cz-conventional-changelog > commitizen > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip >
+          cz-conventional-changelog > commitizen > lodash
+    - patternfly-react > react-ellipsis-with-tooltip > semantic-release > @semantic-release/release-notes-generator > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip > semantic-release >
+          @semantic-release/release-notes-generator > lodash
+    - patternfly-react > react-ellipsis-with-tooltip > cz-conventional-changelog > commitizen > inquirer > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip >
+          cz-conventional-changelog > commitizen > inquirer > lodash
+    - patternfly-react > react-ellipsis-with-tooltip > semantic-release > @semantic-release/commit-analyzer > conventional-commits-parser > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip > semantic-release >
+          @semantic-release/commit-analyzer > conventional-commits-parser >
+          lodash
+    - patternfly-react > react-ellipsis-with-tooltip > semantic-release > @semantic-release/release-notes-generator > conventional-changelog-writer > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip > semantic-release >
+          @semantic-release/release-notes-generator >
+          conventional-changelog-writer > lodash
+    - patternfly-react > react-ellipsis-with-tooltip > cz-conventional-changelog > commitizen > cz-conventional-changelog > @commitlint/load > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip >
+          cz-conventional-changelog > commitizen > cz-conventional-changelog >
+          @commitlint/load > lodash
+    - patternfly-react > react-ellipsis-with-tooltip > cz-conventional-changelog > commitizen > cz-conventional-changelog > @commitlint/load > @commitlint/resolve-extends > lodash:
+        patched: '2023-08-30T21:30:40.365Z'
+        id: SNYK-JS-LODASH-567746
+        path: >-
+          patternfly-react > react-ellipsis-with-tooltip >
+          cz-conventional-changelog > commitizen > cz-conventional-changelog >
+          @commitlint/load > @commitlint/resolve-extends > lodash
