@@ -112,7 +112,7 @@ sqlparse==0.2.4           # via django, django-debug-toolbar
 toml==0.10.0              # via dynaconf
 typing-extensions==3.7.4.2  # via aiohttp
 uritemplate==3.0.0        # via coreapi, drf-yasg
-urllib3==1.24.3           # via botocore, requests
+urllib3==1.26.17           # via botocore, requests
 wcwidth==0.1.9            # via pytest
 webencodings==0.5.1       # via bleach
 whitenoise==4.1.2         # via pulpcore
