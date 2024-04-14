@@ -52,7 +52,7 @@ galaxy-importer==0.2.7    # via -r requirements/requirements.in
 gunicorn==19.7.1          # via -r requirements/requirements.in, pulpcore
 honcho==1.0.1             # via -r requirements/dev-requirements.in
 idna-ssl==1.1.0           # via aiohttp
-idna==2.7                 # via cryptography, idna-ssl, requests, yarl
+idna==3.7                 # via cryptography, idna-ssl, requests, yarl
 imagesize==1.1.0          # via sphinx
 importlib-metadata==1.5.2  # via pluggy, pytest
 inflection==0.3.1         # via drf-yasg
