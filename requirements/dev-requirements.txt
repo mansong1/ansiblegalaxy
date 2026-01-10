@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/dev-requirements.txt requirements/dev-requirements.in
 #
-aiohttp==3.5.4            # via -r requirements/requirements.in
+aiohttp==3.13.3            # via -r requirements/requirements.in
 alabaster==0.7.12         # via sphinx
 amqp==1.4.9               # via kombu
 ansible-lint==4.2.0       # via -r requirements/requirements.in, galaxy-importer
@@ -112,7 +112,7 @@ sqlparse==0.2.4           # via django, django-debug-toolbar
 toml==0.10.0              # via dynaconf
 typing-extensions==3.7.4.2  # via aiohttp
 uritemplate==3.0.0        # via coreapi, drf-yasg
-urllib3==1.24.3           # via botocore, requests
+urllib3==2.6.3           # via botocore, requests
 wcwidth==0.1.9            # via pytest
 webencodings==0.5.1       # via bleach
 whitenoise==4.1.2         # via pulpcore
